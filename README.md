@@ -2,7 +2,7 @@
 * libx264
 * libx265
 * libfdk_aac
-* libndi_newtek (stream via le réseau) support max ffmpeg 4.1.5 pour des soucis de licence
+* libndi_newtek
 
 NDI SDK
 * http://new.tk/NDISDKAPPLE
@@ -46,4 +46,4 @@ ffplay -f libndi_newtek -i 'test'
 
 NDI Resources:
 * <http://haytech.blogspot.com/2018/03/ndi-and-ffmpeg-streaming-commands.html> useful commands
-* <https://slepin.fr/obs-ndi/> binaires de chez newtek
+* <https://slepin.fr/obs-ndi/> Newtek binaires
