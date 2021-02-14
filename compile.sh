@@ -39,7 +39,7 @@ installLibSDL2() {
   fi
   cd SDL2-2.0.9 && \
   PATH="$BIN_PATH:$PATH" ./configure --prefix="$BUILD_PATH" --bindir="$BIN_PATH" --enable-static && \
-  make && \
+  make -j4 && \
   make install
 }
 
@@ -72,7 +72,7 @@ installNASM() {
   echo "* compilation NASM"
   ./autogen.sh
   ./configure --prefix="$BUILD_PATH" --bindir="$BIN_PATH" && \
-  make && \
+  make -j4 && \
   make install
 }
 
@@ -87,7 +87,7 @@ installYasm() {
   fi
   cd yasm-1.3.0 && \
   ./configure --prefix="$BUILD_PATH" --bindir="$BIN_PATH" && \
-  make && \
+  make -j4 && \
   make install
 }
 
@@ -101,7 +101,7 @@ installLibX264() {
   fi
   cd x264 && \
   PATH="$BIN_PATH:$PATH" ./configure --prefix="$BUILD_PATH" --bindir="$BIN_PATH" --enable-static && \
-  PATH="$BIN_PATH:$PATH" make && \
+  PATH="$BIN_PATH:$PATH" make -j4 && \
   make install
 }
 
@@ -123,7 +123,7 @@ installLibX265() {
   fi
   cd x265/build/linux && \
   PATH="$BIN_PATH:$PATH" ./configure --prefix="$BUILD_PATH" --bindir="$BIN_PATH" --enable-static && \
-  PATH="$BIN_PATH:$PATH" make && \
+  PATH="$BIN_PATH:$PATH" make -j4 && \
   make install
 }
 
@@ -146,7 +146,7 @@ installLibFdkAac() {
   cd fdk-aac && \
   autoreconf -fiv && \
   ./configure --prefix="$BUILD_PATH" --disable-shared && \
-  make && \
+  make -j4 && \
   make install
 }
 
@@ -169,20 +169,18 @@ enableLibNDINewTek() {
 ##
 installFfmpeg() {
   cd "$SRC_PATH" || return
-  if [ ! -d "ffmpeg-4.1.5" ]; then
-    curl -O -L https://ffmpeg.org/releases/ffmpeg-4.1.5.tar.bz2 && \
-    tar xjvf ffmpeg-4.1.5.tar.bz2
-  fi
-  cd ffmpeg-4.1.5 && \
+  git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg \
+  cd ffmpeg && \
   PATH="$BIN_PATH:$PATH" PKG_CONFIG_PATH="$BUILD_PATH/lib/pkgconfig" ./configure \
     --prefix="$BUILD_PATH" \
     --extra-cflags="-I$BUILD_PATH/include" \
     --extra-ldflags="-L$BUILD_PATH/lib" \
     --bindir="$BIN_PATH" \
     ${FFMPEG_ENABLE} && \
-  PATH="$BIN_PATH:$PATH" make && \
+  PATH="$BIN_PATH:$PATH" make -j4 && \
   make install
 }
+
 #    --extra-cflags="-I$BUILD_PATH/include" \
 #    --extra-ldflags="-L$BUILD_PATH/lib" \
 #    --extra-cflags="-I$BUILD_PATH/include -I/Library/NDI\ SDK\ for\ Apple/include" \
